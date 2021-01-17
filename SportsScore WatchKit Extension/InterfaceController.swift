@@ -240,7 +240,7 @@ class InterfaceController: WKInterfaceController {
                 case "game":
                     tennisBScore.games = tennisBScore.games < 7 ? tennisBScore.games + 1 : 0
                 case "set":
-                    tennisBScore.sets = tennisBScore.sets < 5 ? tennisBScore.sets + 1 : 0
+                    tennisBScore.sets = tennisBScore.sets < 3 ? tennisBScore.sets + 1 : 0
                 default:
                     tennisBScore.points = 0
                     tennisBScore.games = 0
