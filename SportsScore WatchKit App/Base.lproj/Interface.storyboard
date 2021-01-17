@@ -31,13 +31,13 @@
                                 <button alignment="left" verticalAlignment="center" title="Point +1" id="we8-gf-GF9">
                                     <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
-                                        <action selector="firstAddScoreA" destination="AgC-eL-Hgc" id="vke-rl-7Lm"/>
+                                        <action selector="firstAddScoreA" destination="AgC-eL-Hgc" id="dBU-0t-ja7"/>
                                     </connections>
                                 </button>
                                 <button alignment="right" verticalAlignment="center" title="Point +1" id="YZv-d1-bFc">
                                     <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
-                                        <action selector="secondAddScoreB" destination="AgC-eL-Hgc" id="YRD-A7-EnQ"/>
+                                        <action selector="firstAddScoreB" destination="AgC-eL-Hgc" id="9xe-gP-skJ"/>
                                     </connections>
                                 </button>
                             </items>
@@ -46,9 +46,15 @@
                             <items>
                                 <button alignment="left" verticalAlignment="center" title="Game +1" id="Qob-OU-RZP">
                                     <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <connections>
+                                        <action selector="secondAddScoreA" destination="AgC-eL-Hgc" id="YNG-oY-F9C"/>
+                                    </connections>
                                 </button>
                                 <button alignment="right" verticalAlignment="center" title="Game +1" id="8qv-lm-hX0">
                                     <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <connections>
+                                        <action selector="secondAddScoreB" destination="AgC-eL-Hgc" id="dnv-7k-hfI"/>
+                                    </connections>
                                 </button>
                             </items>
                         </group>
@@ -56,9 +62,15 @@
                             <items>
                                 <button alignment="left" verticalAlignment="center" title="Set +1" id="HRz-X0-dDQ">
                                     <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <connections>
+                                        <action selector="thirdAddScoreA" destination="AgC-eL-Hgc" id="GZB-tF-7Ui"/>
+                                    </connections>
                                 </button>
                                 <button alignment="right" verticalAlignment="center" title="Set +1" id="dbr-tH-c1H">
                                     <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <connections>
+                                        <action selector="thirdAddScoreB" destination="AgC-eL-Hgc" id="ew1-Yq-kaP"/>
+                                    </connections>
                                 </button>
                             </items>
                         </group>

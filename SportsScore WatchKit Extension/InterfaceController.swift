@@ -13,11 +13,22 @@ struct Sport {
     var competitorName = ""
     var pointNames: [String] = []
     var iconName = ""
-    var scoreFunc: (_ competitor: String) -> Void
+    var scoreFunc: (_ competitor: String, _ pointType: String) -> Void
 }
 
 struct FootBallScore {
     var goals: Int = 0
+}
+
+struct TennisScore {
+    var points: Int = 0
+    var games: Int = 0
+    var sets: Int = 0
+}
+
+struct PingPongScore {
+    var points: Int = 0
+    var games: Int = 0
 }
 
 class InterfaceController: WKInterfaceController {
@@ -42,16 +53,15 @@ class InterfaceController: WKInterfaceController {
     
     public var footballAScore = FootBallScore()
     public var footballBScore = FootBallScore()
-    
-    // Tennis scorer
-    public var playerAPoints = 0
-    public var playerAGames = 0
-    public var playerASets = 0
+    public var tennisAScore = TennisScore()
+    public var tennisBScore = TennisScore()
+    public var pingpongAScore = PingPongScore()
+    public var pingpongBScore = PingPongScore()
 
     override func awake(withContext context: Any?) {
         // Configure interface objects here.
         initSportList()
-        resetValues()
+        resetValues(sportName: "Football")
         setCurrentSport(currentSportIndex: 1)
         sportsPicker.setSelectedItemIndex(1)
     }
@@ -65,21 +75,35 @@ class InterfaceController: WKInterfaceController {
     }
     
     @IBAction func selectSport(_ value: Int) {
-        resetValues()
         setCurrentSport(currentSportIndex: value)
+        resetValues(sportName: currentSport.name)
     }
     
     @IBAction func firstAddScoreA() {
-        currentSport.scoreFunc("A")
+        currentSport.scoreFunc("A", "point")
+    }
+    @IBAction func firstAddScoreB() {
+        currentSport.scoreFunc("B", "point")
+    }
+    @IBAction func secondAddScoreA() {
+        currentSport.scoreFunc("A", "game")
     }
     @IBAction func secondAddScoreB() {
-        currentSport.scoreFunc("B")
+        currentSport.scoreFunc("B", "game")
     }
+    @IBAction func thirdAddScoreA() {
+        currentSport.scoreFunc("A", "set")
+
+    }
+    @IBAction func thirdAddScoreB() {
+        currentSport.scoreFunc("B", "set")
+    }
+
     
     private func initSportList() {
-        sportsList.append(Sport(name: "Tennis", competitorName: "Player", pointNames: ["Point", "Game", "Set"], iconName: "tennis-icon", scoreFunc: addSinglePoint(competitor:)))
-        sportsList.append(Sport(name: "Football", competitorName: "Team", pointNames: ["Goal"], iconName: "football-icon", scoreFunc: addSinglePoint(competitor:)))
-        sportsList.append(Sport(name: "Ping Pong", competitorName: "Player", pointNames: ["Point", "Game"], iconName: "pingpong-icon", scoreFunc: addSinglePoint(competitor:)))
+        sportsList.append(Sport(name: "Tennis", competitorName: "Player", pointNames: ["Point", "Game", "Set"], iconName: "tennis-icon", scoreFunc: addTennisPoint))
+        sportsList.append(Sport(name: "Football", competitorName: "Team", pointNames: ["Goal"], iconName: "football-icon", scoreFunc: addFootballPoint))
+        sportsList.append(Sport(name: "Ping Pong", competitorName: "Player", pointNames: ["Point", "Game"], iconName: "pingpong-icon", scoreFunc: addPingPongPoint))
         
         sportsPicker.setItems(composePickerItemList(sports: sportsList))
     }
@@ -106,6 +130,8 @@ class InterfaceController: WKInterfaceController {
         competitorALabel.setText("\(currentSport.competitorName) A")
         competitorBLabel.setText("\(currentSport.competitorName) B")
         
+        secondAddGroup.setHidden(true)
+        thirdAddGroup.setHidden(true)
         for (index, pointName) in currentSport.pointNames.enumerated() {
             if index == 0 {
                 firstPointAButton.setTitle("\(pointName) +1")
@@ -122,17 +148,28 @@ class InterfaceController: WKInterfaceController {
         }
     }
     
-    private func resetValues() {
-        secondAddGroup.setHidden(true)
-        thirdAddGroup.setHidden(true)
-        
+    private func resetValues(sportName: String) {
         footballAScore = FootBallScore()
         footballBScore = FootBallScore()
-        competitorAScoreLabel.setText("0")
-        competitorBSocreLabel.setText("0")
+        tennisAScore = TennisScore()
+        tennisBScore = TennisScore()
+        pingpongAScore = PingPongScore()
+        pingpongBScore = PingPongScore()
+        
+        var initialScoreText = "0"
+        if sportName == "Football" {
+            initialScoreText = "0"
+        } else if sportName == "Tennis" {
+            initialScoreText = "0 | 0 | 0"
+        } else if sportName == "Ping Pong" {
+            initialScoreText = "0 | 0"
+        }
+        
+        competitorAScoreLabel.setText(initialScoreText)
+        competitorBSocreLabel.setText(initialScoreText)
     }
     
-    private func addSinglePoint(competitor: String) {
+    private func addFootballPoint(competitor: String, _ pointType: String) {
         if competitor == "A" {
             footballAScore.goals+=1
             competitorAScoreLabel.setText(String(footballAScore.goals))
@@ -142,5 +179,95 @@ class InterfaceController: WKInterfaceController {
         }
     }
     
+    private func addPingPongPoint(competitor: String, _ pointType: String) {
+        if competitor == "A" {
+            switch pointType {
+                case "point":
+                    pingpongAScore.points = pingpongAScore.points < 12 ? pingpongAScore.points + 1 : 0
+                case "game":
+                    pingpongAScore.games = pingpongAScore.games < 4 ? pingpongAScore.games + 1 : 0
+                default:
+                    pingpongAScore.points = 0
+                    pingpongAScore.games = 0
+            }
+            
+            competitorAScoreLabel.setText("\(String(pingpongAScore.games)) | \(getPingPongPointName(pointNumber: pingpongAScore.points))")
+        } else if competitor == "B" {
+            switch pointType {
+                case "point":
+                    pingpongBScore.points = pingpongBScore.points < 12 ? pingpongBScore.points + 1 : 0
+                case "game":
+                    pingpongBScore.games = pingpongBScore.games < 4 ? pingpongBScore.games + 1 : 0
+                default:
+                    pingpongBScore.points = 0
+                    pingpongBScore.games = 0
+            }
+            
+            competitorBSocreLabel.setText("\(String(pingpongBScore.games)) | \(getPingPongPointName(pointNumber: pingpongBScore.points))")
+        }
+    }
+    
+    private func getPingPongPointName(pointNumber: Int) -> String {
+        var pointName = ""
+        if pointNumber > 11 {
+            pointName = "AD"
+        } else {
+            pointName = String(pointNumber)
+        }
+        return pointName
+    }
+    
+    private func addTennisPoint(competitor: String, _ pointType: String) {
+        if competitor == "A" {
+            switch pointType {
+                case "point":
+                    tennisAScore.points = tennisAScore.points < 4 ? tennisAScore.points + 1 : 0
+                case "game":
+                    tennisAScore.games = tennisAScore.games < 7 ? tennisAScore.games + 1 : 0
+                case "set":
+                    tennisAScore.sets = tennisAScore.sets < 3 ? tennisAScore.sets + 1 : 0
+                default:
+                    tennisAScore.points = 0
+                    tennisAScore.games = 0
+                    tennisAScore.sets = 0
+            }
+            
+            competitorAScoreLabel.setText("\(String(tennisAScore.sets)) | \(String(tennisAScore.games)) | \(getTennisPointName(pointNumber: tennisAScore.points))")
+        } else if competitor == "B" {
+            switch pointType {
+                case "point":
+                    tennisBScore.points = tennisBScore.points < 4 ? tennisBScore.points + 1 : 0
+                case "game":
+                    tennisBScore.games = tennisBScore.games < 7 ? tennisBScore.games + 1 : 0
+                case "set":
+                    tennisBScore.sets = tennisBScore.sets < 5 ? tennisBScore.sets + 1 : 0
+                default:
+                    tennisBScore.points = 0
+                    tennisBScore.games = 0
+                    tennisBScore.sets = 0
+            }
+            
+            competitorBSocreLabel.setText("\(String(tennisBScore.sets)) | \(String(tennisBScore.games)) | \(getTennisPointName(pointNumber: tennisBScore.points))")
+        }
+    }
+    
+    private func getTennisPointName(pointNumber: Int) -> String {
+        var pointName = ""
+        switch pointNumber {
+            case 0:
+                pointName = "0"
+            case 1:
+                pointName = "15"
+            case 2:
+                pointName = "30"
+            case 3:
+                pointName = "40"
+            case 4:
+                pointName = "AD"
+            default:
+                pointName = ""
+        }
+        return pointName
+    }
     
 }
