@@ -1,16 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14256" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17701" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch44"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14243"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14219"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17500"/>
     </dependencies>
     <scenes>
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModuleProvider="target"/>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SportsScore_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <label width="1" alignment="center" text="Tennis" textAlignment="center" id="ufT-r0-Y2k">
+                            <color key="textColor" red="1" green="0.28191608289308256" blue="0.38413329430461118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </label>
+                        <group width="1" alignment="center" verticalAlignment="center" id="gdi-0i-7Bz" userLabel="Teams Group">
+                            <items>
+                                <label alignment="left" alpha="0.69999999999999996" text="Player A" textAlignment="left" id="9Vn-AP-yc9"/>
+                                <label alignment="right" alpha="0.69999999999999996" text="Player B" id="Tki-B3-jjz"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="center" verticalAlignment="center" spacing="0.0" id="K1C-yj-RL9" userLabel="Scores Group">
+                            <items>
+                                <label alignment="left" verticalAlignment="center" text="0" textAlignment="left" id="mNm-TX-IOp"/>
+                                <label alignment="right" verticalAlignment="center" text="0" id="4ra-rS-C6N"/>
+                            </items>
+                        </group>
+                        <group width="1" alignment="center" verticalAlignment="bottom" spacing="0.0" id="0Er-JI-jx0" userLabel="First Add Group">
+                            <items>
+                                <button alignment="left" verticalAlignment="center" title="Point +1" id="we8-gf-GF9">
+                                    <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <connections>
+                                        <action selector="firstAddScoreA" destination="AgC-eL-Hgc" id="vke-rl-7Lm"/>
+                                    </connections>
+                                </button>
+                                <button alignment="right" verticalAlignment="center" title="Point +1" id="YZv-d1-bFc">
+                                    <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <connections>
+                                        <action selector="secondAddScoreB" destination="AgC-eL-Hgc" id="YRD-A7-EnQ"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
+                        <group width="1" alignment="center" verticalAlignment="bottom" spacing="0.0" id="ZQC-5P-Faq" userLabel="Second Add Group">
+                            <items>
+                                <button alignment="left" verticalAlignment="center" title="Game +1" id="Qob-OU-RZP">
+                                    <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </button>
+                                <button alignment="right" verticalAlignment="center" title="Game +1" id="8qv-lm-hX0">
+                                    <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </button>
+                            </items>
+                        </group>
+                        <group width="1" alignment="center" verticalAlignment="bottom" spacing="0.0" id="Cix-mj-1vA" userLabel="Third Add Group">
+                            <items>
+                                <button alignment="left" verticalAlignment="center" title="Set +1" id="HRz-X0-dDQ">
+                                    <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </button>
+                                <button alignment="right" verticalAlignment="center" title="Set +1" id="dbr-tH-c1H">
+                                    <color key="titleColor" red="1" green="0.28191608289999998" blue="0.38413329429999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </button>
+                            </items>
+                        </group>
+                        <picker height="100" alignment="center" verticalAlignment="bottom" id="osK-10-80u">
+                            <connections>
+                                <action selector="selectSport:" destination="AgC-eL-Hgc" id="mUQ-OA-dfb"/>
+                            </connections>
+                        </picker>
+                    </items>
+                    <connections>
+                        <outlet property="competitorALabel" destination="9Vn-AP-yc9" id="9B7-ac-c6a"/>
+                        <outlet property="competitorAScoreLabel" destination="mNm-TX-IOp" id="PyB-Tn-eLL"/>
+                        <outlet property="competitorBLabel" destination="Tki-B3-jjz" id="a3E-3g-pdn"/>
+                        <outlet property="competitorBSocreLabel" destination="4ra-rS-C6N" id="pNX-Wz-Azp"/>
+                        <outlet property="firstPointAButton" destination="we8-gf-GF9" id="XyR-rt-xpU"/>
+                        <outlet property="firstPointBButton" destination="YZv-d1-bFc" id="KTY-gr-oLz"/>
+                        <outlet property="secondAddGroup" destination="ZQC-5P-Faq" id="rVx-tc-aYR"/>
+                        <outlet property="secondPointAButton" destination="Qob-OU-RZP" id="CMp-kB-gi0"/>
+                        <outlet property="secondPointBButton" destination="8qv-lm-hX0" id="zdC-tB-ZEg"/>
+                        <outlet property="sportNameLabel" destination="ufT-r0-Y2k" id="W11-xb-hNc"/>
+                        <outlet property="sportsPicker" destination="osK-10-80u" id="bVh-cm-foC"/>
+                        <outlet property="thirdAddGroup" destination="Cix-mj-1vA" id="Khy-cz-s1l"/>
+                        <outlet property="thirdPointAButton" destination="HRz-X0-dDQ" id="8cd-Y6-Zjw"/>
+                        <outlet property="thirdPointBButton" destination="dbr-tH-c1H" id="Ct7-fM-FIb"/>
+                    </connections>
+                </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="345"/>
+            <point key="canvasLocation" x="114.17283950617283" y="280.02538071065987"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
@@ -32,14 +108,14 @@
         <!--Notification Controller-->
         <scene sceneID="ZPc-GJ-vnh">
             <objects>
-                <controller id="4sK-HA-Art" customClass="NotificationController" customModuleProvider="target"/>
+                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="SportsScore_WatchKit_App" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="468" y="643"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="Niz-AI-uX2">
             <objects>
-                <controller id="eXb-UN-Cd0" customClass="NotificationController" customModuleProvider="target"/>
+                <controller id="eXb-UN-Cd0" customClass="NotificationController" customModule="SportsScore_WatchKit_App" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="468" y="345"/>
         </scene>
